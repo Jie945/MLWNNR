@@ -2,19 +2,19 @@ clc;clear;
 warning('off');
 tic
 
-%% 1. µ¼ÈëÊı¾İ
-Wdd = load('./dataset/Disease_similarity.csv');   %218*218 ¼²²¡
+%% 1. å¯¼å…¥æ•°æ®
+Wdd = load('./dataset/Disease_similarity.csv');   %218*218 ç–¾ç—…
 WDD = load('./dataset/LncRNA_similarity.csv');  %447*447  RNA
-WdD = load('./dataset/Disease_LncRNA_association.csv');     %218*447 ¼²²¡*RNA
+WdD = load('./dataset/Disease_LncRNA_association.csv');     %218*447 ç–¾ç—…*RNA
 [dn,dr] = size(WdD);
 
-%% 2. ¼ÆËãÏàËÆĞÔºÍºËÈÚºÏ
+%% 2. è®¡ç®—ç›¸ä¼¼æ€§å’Œæ ¸èåˆ
 WdD_temp1 = WdD;
 gamma_net = 2^0;
 ks = 0.6;
 [KD_COM,Kd_COM] = CT(WdD_temp1', WDD, Wdd, gamma_net,ks);
 
-%% 3. ¼ÆËãÒ»´ÎÔ¤²â
+%% 3. è®¡ç®—ä¸€æ¬¡é¢„æµ‹
 WdD_ori = WdD;
 maxiter = 300;
 alpha = 0.5;   
@@ -28,14 +28,14 @@ trIndex = double(T ~= 0);
 [WW,~] = WNNR(alpha, beta, T, trIndex, tol1, tol2, maxiter, 0, 1, C);
 Score = WW((t1-dn+1) : t1, 1 : dr);  
 
-%% ²âÊÔÇ°×¼±¸
+%% æµ‹è¯•å‰å‡†å¤‡
 Score_ori = Score;
 index=find(WdD_ori==1);
 auc = zeros(1,10);
 
 %%  5-fold CV
 %{
-for i = 1:1
+for i = 1:100
     i
     indices = crossvalind('Kfold', length(index), 5);
     WdD_temp = WdD_ori;
