@@ -63,8 +63,9 @@ for i = 1:5
         index_2 = find(j == indices);
         WdD_temp(index(index_2)) = 0; 
         gamma_net = 2^0;
-        [KD_COM_temp, Kd_COM_temp] = CT(WdD_temp',WDD,Wdd,gamma_net,ks);
-        T_1 = [KD_COM_temp, WdD_temp'; WdD_temp, Kd_COM_temp];
+        %[KD_COM_temp, Kd_COM_temp] = CT(WdD_temp',WDD,Wdd,gamma_net,ks);
+        %T_1 = [KD_COM_temp, WdD_temp'; WdD_temp, Kd_COM_temp];
+        T_1 = [KD_COM, WdD_temp'; WdD_temp, Kd_COM];
         [t1_1, t2_1] = size(T_1);
         trIndex_1 = double(T_1 ~= 0);
         [WW_1,iter_1] = WNNR(alpha, beta, T_1, trIndex_1, tol1, tol2, maxiter, 0, 1, C);
